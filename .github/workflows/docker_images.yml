@@ -1,9 +1,7 @@
 name: Docker image
 
 on:
-  pull_request:
-    branches:
-      - main
+  pull_request
 
 env:
   REGISTRY_IMAGE: weinaji/neurodamus_test
