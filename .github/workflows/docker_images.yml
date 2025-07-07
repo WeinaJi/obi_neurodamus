@@ -15,7 +15,7 @@ jobs:
         include:
           - os: ubuntu-latest
             platform: linux/amd64
-          - os: macos-latest
+          - os: ubuntu-24.04-arm
             platform: linux/arm64
     environment: dockerhub
     steps:
