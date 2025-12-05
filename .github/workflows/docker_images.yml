@@ -3,8 +3,26 @@ name: Docker image
 on:
   pull_request
 
+  workflow_dispatch:
+    inputs:
+      NEURODAMUS_TAG:
+        description: 'neurodamus tag to use'
+        required: false
+        default: 'main'
+      NEURON_TAG:
+        description: 'NEURON tag to use'
+        required: false
+        default: 'master'
+      LIBSONATAREPORT_TAG:
+        description: 'libsonatareport tag to use'
+        required: false
+        default: 'master'
+      LIBSONATA_TAG:
+        description: 'libsonata tag to use'
+        required: 'master'
+
 env:
-  REGISTRY_IMAGE: weinaji/neurodamus_test
+  REGISTRY_IMAGE: weinaji/neurodamus_${{ iputs.NEURODAMUS_TAG }}
 
 jobs:
   build:
@@ -54,6 +72,11 @@ jobs:
           context: ./docker # important for any COPY/ADD operations in the Dockerfile
           file: ./docker/Dockerfile
           tags: ${{ env.REGISTRY_IMAGE }}
+          build-args: |
+            NEURODAMUS_TAG=${{ inputs.NEURODAMUS_TAG }}
+            NEURON_TAG=${{ inputs.NEURON_TAG }}
+            LIBSONATAREPORT_TAG=${{ inputs.LIBSONATAREPORT_TAG }}
+            LIBSONATA_TAG=${{ inputs.LIBSONATA_TAG }}
           outputs: type=image,push-by-digest=true,name-canonical=true,push=true
           # import cache from a previously exported cache with --cache-to
           cache-from: type=gha

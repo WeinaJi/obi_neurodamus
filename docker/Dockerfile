@@ -12,6 +12,7 @@ ARG NEURON_COMMIT_ID
 ARG WORKDIR=/opt/software
 ARG INSTALL_DIR=/opt/software/install
 ARG USR_VENV=$WORKDIR/venv
+ARG NEURODAMUS_TAG=main
 
 # Install needed libs
 RUN apt-get --yes -qq update \
@@ -75,7 +76,7 @@ RUN source $USR_VENV/bin/activate \
 # Install neurodamus and prepare HOC_LIBRARY_PATH
 RUN source $USR_VENV/bin/activate \
  && cd $WORKDIR \
- && git clone https://github.com/openbraininstitute/neurodamus.git \
+ && git clone https://github.com/openbraininstitute/neurodamus.git -b NEURODAMUS_TAG \
  && cd neurodamus \
  && pip install .
 
