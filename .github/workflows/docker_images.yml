@@ -1,8 +1,6 @@
 name: Docker image
 
 on:
-  pull_request
-
   workflow_dispatch:
     inputs:
       NEURODAMUS_TAG:
@@ -19,10 +17,11 @@ on:
         default: 'master'
       LIBSONATA_TAG:
         description: 'libsonata tag to use'
-        required: 'master'
+        required: false
+        default: 'master'
 
 env:
-  REGISTRY_IMAGE: weinaji/neurodamus_${{ iputs.NEURODAMUS_TAG }}
+  REGISTRY_IMAGE: weinaji/neurodamus_${{ inputs.NEURODAMUS_TAG }}
 
 jobs:
   build:
