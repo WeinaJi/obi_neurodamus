@@ -1,6 +1,10 @@
 name: Docker image
 
 on:
+  pull_request:
+    branches:
+      - main
+
   workflow_dispatch:
     inputs:
       NEURODAMUS_TAG:
