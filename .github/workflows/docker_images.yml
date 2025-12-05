@@ -10,22 +10,18 @@ on:
       NEURODAMUS_TAG:
         description: 'neurodamus tag to use'
         required: false
-        default: 'main'
       NEURON_TAG:
         description: 'NEURON tag to use'
         required: false
-        default: 'master'
       LIBSONATAREPORT_TAG:
         description: 'libsonatareport tag to use'
         required: false
-        default: 'master'
       LIBSONATA_TAG:
         description: 'libsonata tag to use'
         required: false
-        default: 'master'
 
 env:
-  REGISTRY_IMAGE: weinaji/neurodamus_${{ inputs.NEURODAMUS_TAG }}
+  REGISTRY_IMAGE: weinaji/neurodamus_${{ inputs.NEURODAMUS_TAG || 'main'}}
 
 jobs:
   build:
@@ -76,10 +72,10 @@ jobs:
           file: ./docker/Dockerfile
           tags: ${{ env.REGISTRY_IMAGE }}
           build-args: |
-            NEURODAMUS_TAG=${{ inputs.NEURODAMUS_TAG }}
-            NEURON_TAG=${{ inputs.NEURON_TAG }}
-            LIBSONATAREPORT_TAG=${{ inputs.LIBSONATAREPORT_TAG }}
-            LIBSONATA_TAG=${{ inputs.LIBSONATA_TAG }}
+            NEURODAMUS_TAG=${{ inputs.NEURODAMUS_TAG || 'main' }}
+            NEURON_TAG=${{ inputs.NEURON_TAG || 'master' }}
+            LIBSONATAREPORT_TAG=${{ inputs.LIBSONATAREPORT_TAG || 'master'}}
+            LIBSONATA_TAG=${{ inputs.LIBSONATA_TAG || 'master' }}
           outputs: type=image,push-by-digest=true,name-canonical=true,push=true
           # import cache from a previously exported cache with --cache-to
           cache-from: type=gha
