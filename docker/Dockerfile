@@ -76,7 +76,7 @@ RUN source $USR_VENV/bin/activate \
 # Install neurodamus and prepare HOC_LIBRARY_PATH
 RUN source $USR_VENV/bin/activate \
  && cd $WORKDIR \
- && git clone https://github.com/openbraininstitute/neurodamus.git -b NEURODAMUS_TAG \
+ && git clone https://github.com/openbraininstitute/neurodamus.git -b $NEURODAMUS_TAG \
  && cd neurodamus \
  && pip install .
 
