@@ -73,7 +73,7 @@ jobs:
           tags: ${{ env.REGISTRY_IMAGE }}
           build-args: |
             NEURODAMUS_TAG=${{ inputs.NEURODAMUS_TAG || 'main' }}
-            NEURON_TAG=${{ inputs.NEURON_TAG || 'master' }}
+            NEURON_TAG=${{ inputs.NEURON_TAG || '9.0.1' }}
             LIBSONATAREPORT_TAG=${{ inputs.LIBSONATAREPORT_TAG || 'master'}}
             LIBSONATA_TAG=${{ inputs.LIBSONATA_TAG || 'master' }}
           outputs: type=image,push-by-digest=true,name-canonical=true,push=true
