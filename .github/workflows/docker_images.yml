@@ -76,7 +76,8 @@ jobs:
             NEURON_TAG=${{ inputs.NEURON_TAG || '9.0.1' }}
             LIBSONATAREPORT_TAG=${{ inputs.LIBSONATAREPORT_TAG || 'master'}}
             LIBSONATA_TAG=${{ inputs.LIBSONATA_TAG || 'master' }}
-          outputs: type=image,push-by-digest=true,name-canonical=true,push=true
+          push: true
+          # outputs: type=image,push-by-digest=true,name-canonical=true,push=true
           # import cache from a previously exported cache with --cache-to
           cache-from: type=gha
           cache-to: type=gha,mode=max
