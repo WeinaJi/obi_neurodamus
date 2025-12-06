@@ -21,7 +21,7 @@ on:
         required: false
 
 env:
-  REGISTRY_IMAGE: weinaji/neurodamus_${{ inputs.NEURODAMUS_TAG || 'main'}}
+  REGISTRY_IMAGE: weinaji/neurodamus_test
 
 jobs:
   build:
@@ -70,9 +70,9 @@ jobs:
           labels: ${{steps.meta.outputs.labels}}
           context: ./docker # important for any COPY/ADD operations in the Dockerfile
           file: ./docker/Dockerfile
-          tags: ${{ env.REGISTRY_IMAGE }}
+          tags: ${{ env.REGISTRY_IMAGE }}:point_neuron
           build-args: |
-            NEURODAMUS_TAG=${{ inputs.NEURODAMUS_TAG || 'main' }}
+            NEURODAMUS_TAG=${{ inputs.NEURODAMUS_TAG || 'v1_version2' }}
             NEURON_TAG=${{ inputs.NEURON_TAG || '9.0.1' }}
             LIBSONATAREPORT_TAG=${{ inputs.LIBSONATAREPORT_TAG || 'master'}}
             LIBSONATA_TAG=${{ inputs.LIBSONATA_TAG || 'master' }}
