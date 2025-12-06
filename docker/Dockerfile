@@ -12,6 +12,7 @@ ARG NEURON_COMMIT_ID
 ARG WORKDIR=/opt/software
 ARG INSTALL_DIR=/opt/software/install
 ARG USR_VENV=$WORKDIR/venv
+ARG NEURODAMUS_TAG=main
 
 # Install needed libs
 RUN apt-get --yes -qq update \
@@ -75,7 +76,7 @@ RUN source $USR_VENV/bin/activate \
 # Install neurodamus and prepare HOC_LIBRARY_PATH
 RUN source $USR_VENV/bin/activate \
  && cd $WORKDIR \
- && git clone https://github.com/openbraininstitute/neurodamus.git \
+ && git clone https://github.com/openbraininstitute/neurodamus.git -b $NEURODAMUS_TAG \
  && cd neurodamus \
  && pip install .
 
@@ -95,9 +96,11 @@ RUN wget -q https://raw.githubusercontent.com/openbraininstitute/neurodamus-mode
 ADD build_neurodamus.sh $INSTALL_DIR/bin
 RUN ARCH=$(uname -m) \
  && sed -i "s/ARCH=\"x86_64\"/ARCH=\"$ARCH\"/g" $INSTALL_DIR/bin/build_neurodamus.sh \
+ && cd $WORKDIR \
  && build_neurodamus.sh $NEURODAMUS_MODS_DIR \
  && ./$ARCH/special -python -c "from neuron import h; h.quit()" \
- && ./$ARCH/special -python -c "from neurodamus.core import NeuronWrapper as Nd; Nd.init()" \
- && rm -rf $ARCH/
+ && ./$ARCH/special -python -c "from neurodamus.core import NeuronWrapper as Nd; Nd.init()"
+
+ENV PATH="$WORKDIR/aarch64:$WORKDIR/x86_64:$PATH"
 
 ENTRYPOINT ["bash"]
